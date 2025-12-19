@@ -14,6 +14,8 @@ const content = {
   fr: {
     createCV: 'Créer un CV',
     analyze: 'Analyser mon CV',
+    aiAnalysis: 'Analyse IA',
+    widget: 'Widget IA',
     howItWorks: 'Comment ça marche',
     examples: 'Exemples',
     pricing: 'Tarifs',
@@ -23,6 +25,8 @@ const content = {
   en: {
     createCV: 'Create Resume',
     analyze: 'Analyze Resume',
+    aiAnalysis: 'AI Analysis',
+    widget: 'AI Widget',
     howItWorks: 'How it Works',
     examples: 'Examples',
     pricing: 'Pricing',
@@ -60,6 +64,12 @@ export function Header({ language, setLanguage, currentPage, setCurrentPage, isL
               className="text-gray-600 hover:text-gray-900 transition-colors"
             >
               {t.analyze}
+            </button>
+            <button 
+              onClick={() => handleNavClick('analysis')}
+              className="text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              {t.aiAnalysis}
             </button>
             <button 
               onClick={() => handleNavClick('examples')}
@@ -136,6 +146,12 @@ export function Header({ language, setLanguage, currentPage, setCurrentPage, isL
                 className="text-gray-600 hover:text-gray-900 text-left"
               >
                 {t.analyze}
+              </button>
+              <button 
+                onClick={() => handleNavClick('analysis')}
+                className="text-gray-600 hover:text-gray-900 text-left"
+              >
+                {t.aiAnalysis}
               </button>
               <button 
                 onClick={() => handleNavClick('examples')}

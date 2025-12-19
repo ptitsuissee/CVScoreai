@@ -14,19 +14,23 @@ const faqData = {
       },
       {
         question: 'Mon CV est-il stocké ou partagé ?',
-        answer: "Non. Votre CV est utilisé uniquement pour l'analyse demandée et n'est ni vendu ni partagé.",
+        answer: "Non. Votre CV est utilisé uniquement pour l'analyse demandée et n'est ni stocké, ni vendu, ni partagé. Nous respectons votre confidentialité.",
       },
       {
         question: "L'analyse est-elle fiable ?",
-        answer: "Oui. L'IA est entraînée sur les standards de recrutement européens et les systèmes ATS.",
+        answer: "Oui. L'IA est entraînée sur les standards de recrutement européens et les systèmes ATS modernes. Nos algorithmes analysent des milliers de CVs pour fournir des recommandations pertinentes.",
       },
       {
-        question: 'Cet outil convient-il à mon pays ?',
-        answer: "Oui. L'analyse s'adapte au pays sélectionné.",
+        question: 'Est-ce adapté à mon pays ?',
+        answer: "Oui. L'analyse s'adapte spécifiquement au marché de l'emploi de votre pays (France, Suisse, Allemagne, Italie, Espagne). Les normes culturelles et professionnelles locales sont prises en compte.",
+      },
+      {
+        question: 'Quelle est la différence entre gratuit et Premium ?',
+        answer: "La version gratuite offre un score global et des conseils de base. La version Premium débloque : feedback ligne par ligne, optimisation ATS détaillée, suggestions de reformulation et export PDF professionnel.",
       },
       {
         question: 'Les étudiants peuvent-ils utiliser cet outil ?',
-        answer: 'Absolument. CVScore.ai fonctionne pour les étudiants, jeunes diplômés et professionnels expérimentés.',
+        answer: 'Absolument. CVScore.ai fonctionne pour les étudiants, jeunes diplômés et professionnels expérimentés, quel que soit votre niveau d\'expérience.',
       },
     ],
   },
@@ -39,19 +43,23 @@ const faqData = {
       },
       {
         question: 'Is my resume stored or shared?',
-        answer: 'No. Your resume is used only for the requested analysis and is not sold or shared.',
+        answer: 'No. Your resume is used only for the requested analysis and is not stored, sold, or shared. We respect your privacy.',
       },
       {
         question: 'Is the analysis reliable?',
-        answer: 'Yes. The AI is trained on European hiring standards and ATS systems.',
+        answer: 'Yes. The AI is trained on European hiring standards and modern ATS systems. Our algorithms analyze thousands of resumes to provide relevant recommendations.',
       },
       {
         question: 'Is this tool suitable for my country?',
-        answer: 'Yes. The analysis adapts to the selected country.',
+        answer: 'Yes. The analysis specifically adapts to your country\'s job market (France, Switzerland, Germany, Italy, Spain). Local cultural and professional standards are taken into account.',
+      },
+      {
+        question: 'What\'s the difference between free and Premium?',
+        answer: "The free version offers an overall score and basic advice. Premium unlocks: line-by-line feedback, detailed ATS optimization, rewriting suggestions, and professional PDF export.",
       },
       {
         question: 'Can students use this tool?',
-        answer: 'Absolutely. CVScore.ai works for students, graduates, and experienced professionals.',
+        answer: 'Absolutely. CVScore.ai works for students, recent graduates and experienced professionals, regardless of your experience level.',
       },
     ],
   },

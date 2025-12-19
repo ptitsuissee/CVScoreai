@@ -1,4 +1,4 @@
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles, CheckCircle, Zap, Shield } from 'lucide-react';
 
 interface HeroProps {
   language: 'fr' | 'en';
@@ -6,11 +6,16 @@ interface HeroProps {
 
 const content = {
   fr: {
-    title: 'Obtenez une note sur 100 pour votre CV et améliorez-le avec l\'IA',
-    subtitle: 'Analyse instantanée, conseils concrets, normes de recrutement européennes',
+    title: 'Analyse ton CV avec l\'IA et augmente tes chances d\'entretien',
+    subtitle: 'Score instantané, conseils personnalisés et optimisation ATS pour le marché européen.',
     primaryCTA: 'Analyser mon CV gratuitement',
     secondaryCTA: "Voir un exemple d'analyse",
-    noCreditCard: 'Aucune carte bancaire requise',
+    noCreditCard: 'Sans inscription · Résultat immédiat',
+    trustBadges: [
+      { icon: Zap, text: 'Analyse en moins de 60 secondes' },
+      { icon: Shield, text: 'Adapté aux recruteurs européens' },
+      { icon: CheckCircle, text: 'Compatible ATS' },
+    ],
     mockup: {
       score: 'Score Global',
       clarity: 'Clarté',
@@ -21,11 +26,16 @@ const content = {
     },
   },
   en: {
-    title: 'Get your resume scored out of 100 and improve it with AI',
-    subtitle: 'Instant analysis, actionable feedback, European hiring standards',
+    title: 'Analyze your resume with AI and improve your chances of interviews',
+    subtitle: 'Instant score, personalized advice and ATS optimization for the European job market.',
     primaryCTA: 'Analyze my resume for free',
     secondaryCTA: 'See an example analysis',
-    noCreditCard: 'No credit card required',
+    noCreditCard: 'No registration · Instant results',
+    trustBadges: [
+      { icon: Zap, text: 'Analysis in under 60 seconds' },
+      { icon: Shield, text: 'Tailored to European recruiters' },
+      { icon: CheckCircle, text: 'ATS compatible' },
+    ],
     mockup: {
       score: 'Overall Score',
       clarity: 'Clarity',
@@ -78,6 +88,16 @@ export function Hero({ language }: HeroProps) {
             <p className="text-sm text-gray-500 mt-4 text-center lg:text-left">
               {t.noCreditCard}
             </p>
+
+            {/* Trust badges */}
+            <div className="flex flex-wrap gap-4 mt-4">
+              {t.trustBadges.map((badge, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <badge.icon size={16} className="text-blue-600" />
+                  <span className="text-sm text-gray-500">{badge.text}</span>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Right Mockup */}

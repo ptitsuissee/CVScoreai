@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { HowItWorks } from './components/HowItWorks';
@@ -12,7 +12,11 @@ import { FAQSection } from './components/FAQSection';
 import { CTASection } from './components/CTASection';
 import { Footer } from './components/Footer';
 import { ExamplesPage } from './components/ExamplesPage';
-import { PricingPage } from './components/PricingPage';
+import { PricingPageStripe } from './components/PricingPageStripe';
+import { AnalysisPage } from './components/AnalysisPage';
+import { ImprovedAnalysisPage } from './components/ImprovedAnalysisPage';
+import { WidgetDemoPage } from './components/WidgetDemoPage';
+import { FreemiumWidgetPage } from './components/FreemiumWidgetPage';
 import { Dashboard } from './components/Dashboard';
 import { FreeDashboard } from './components/FreeDashboard';
 import { PremiumDashboard } from './components/PremiumDashboard';
@@ -22,6 +26,16 @@ import { PremiumModal } from './components/PremiumModal';
 import { CheckoutMockup } from './components/CheckoutMockup';
 import { PaymentSuccessPage } from './components/PaymentSuccessPage';
 import { PaymentCancelPage } from './components/PaymentCancelPage';
+import { PremiumActivationPage } from './components/PremiumActivationPage';
+import { PremiumSuccessPage } from './components/PremiumSuccessPage';
+import { LaunchChecklistPage } from './components/LaunchChecklistPage';
+import { OnboardingModal } from './components/OnboardingModal';
+import { AdminDevTools } from './components/AdminDevTools';
+import { LaunchStatusBanner } from './components/LaunchStatusBanner';
+import { LaunchCelebration } from './components/LaunchCelebration';
+import { MetricsDashboard } from './components/MetricsDashboard';
+import { FreemiumComparisonVisual } from './components/FreemiumComparisonVisual';
+import { UserJourneyVisualization } from './components/UserJourneyVisualization';
 import { MicroDemoSection } from './components/MicroDemoSection';
 import { PremiumTransitionSection } from './components/PremiumTransitionSection';
 import { MobileCTA } from './components/MobileCTA';
@@ -29,7 +43,7 @@ import { CVAnalysisResult } from './services/cvAnalysis';
 import { CVOptimizationResult, optimizeCVWithAI } from './services/cvOptimization';
 import { PremiumAnalysisResult, analyzeCVPremium } from './services/premiumAnalysis';
 
-type Page = 'home' | 'examples' | 'pricing' | 'dashboard' | 'free-dashboard' | 'premium-dashboard' | 'legal' | 'privacy' | 'checkout' | 'payment-success' | 'payment-cancel';
+type Page = 'home' | 'examples' | 'pricing' | 'analysis' | 'widget' | 'widget-demo' | 'freemium' | 'dashboard' | 'free-dashboard' | 'premium-dashboard' | 'legal' | 'privacy' | 'checkout' | 'payment-success' | 'payment-cancel' | 'premium-activation' | 'premium-success' | 'launch-checklist' | 'metrics' | 'comparison' | 'user-journey';
 
 export default function App() {
   const [language, setLanguage] = useState<'fr' | 'en'>('fr');
@@ -44,6 +58,41 @@ export default function App() {
   const [isPremiumAnalyzing, setIsPremiumAnalyzing] = useState(false);
   const [isPremiumModalOpen, setIsPremiumModalOpen] = useState(false);
   const [selectedPlanType, setSelectedPlanType] = useState<'monthly' | 'oneTime' | null>(null);
+  const [showOnboarding, setShowOnboarding] = useState(false);
+
+  // Check Premium status from localStorage
+  useEffect(() => {
+    const isPremiumStored = localStorage.getItem('isPremium') === 'true';
+    setIsLoggedIn(isPremiumStored);
+  }, []);
+
+  // Show onboarding only on first visit
+  useEffect(() => {
+    const hasSeenOnboarding = localStorage.getItem('hasSeenOnboarding');
+    if (!hasSeenOnboarding && currentPage === 'home') {
+      setShowOnboarding(true);
+      localStorage.setItem('hasSeenOnboarding', 'true');
+    }
+  }, [currentPage]);
+
+  // Activate Premium
+  const activatePremium = () => {
+    setIsLoggedIn(true);
+    localStorage.setItem('isPremium', 'true');
+  };
+
+  // Toggle Premium (dev)
+  const togglePremium = () => {
+    const newState = !isLoggedIn;
+    setIsLoggedIn(newState);
+    localStorage.setItem('isPremium', newState ? 'true' : 'false');
+  };
+
+  // Reset onboarding (dev)
+  const resetOnboarding = () => {
+    localStorage.removeItem('hasSeenOnboarding');
+    setShowOnboarding(true);
+  };
 
   const handleAnalyze = (analysis: CVAnalysisResult, cvData?: any) => {
     setCurrentAnalysis(analysis);
@@ -213,10 +262,37 @@ export default function App() {
       )}
 
       {currentPage === 'pricing' && (
-        <PricingPage 
+        <PricingPageStripe 
           language={language} 
-          onPurchase={handlePremiumPurchase}
-          onOpenPremiumModal={handleOpenPremiumModal}
+          onNavigate={setCurrentPage}
+        />
+      )}
+
+      {currentPage === 'analysis' && (
+        <AnalysisPage 
+          language={language}
+          onNavigate={setCurrentPage}
+        />
+      )}
+
+      {currentPage === 'widget' && (
+        <ImprovedAnalysisPage 
+          language={language}
+          onNavigate={setCurrentPage}
+        />
+      )}
+
+      {currentPage === 'widget-demo' && (
+        <WidgetDemoPage 
+          language={language}
+          onNavigate={setCurrentPage}
+        />
+      )}
+
+      {currentPage === 'freemium' && (
+        <FreemiumWidgetPage 
+          language={language}
+          onNavigate={setCurrentPage}
         />
       )}
 
@@ -294,6 +370,48 @@ export default function App() {
         />
       )}
 
+      {currentPage === 'premium-activation' && (
+        <PremiumActivationPage 
+          language={language}
+          onContinue={() => {
+            activatePremium();
+            setCurrentPage('home');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          planType={selectedPlanType || 'oneTime'}
+        />
+      )}
+
+      {currentPage === 'premium-success' && (
+        <PremiumSuccessPage 
+          language={language}
+          onAccessAnalysis={() => {
+            activatePremium();
+            setCurrentPage('home');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+        />
+      )}
+
+      {currentPage === 'launch-checklist' && (
+        <LaunchChecklistPage language={language} />
+      )}
+
+      {currentPage === 'metrics' && (
+        <MetricsDashboard language={language} />
+      )}
+
+      {currentPage === 'comparison' && (
+        <FreemiumComparisonVisual 
+          language={language}
+          onUpgradePremium={() => setCurrentPage('pricing')}
+        />
+      )}
+
+      {currentPage === 'user-journey' && (
+        <UserJourneyVisualization language={language} />
+      )}
+
       {/* Premium Modal */}
       <PremiumModal
         isOpen={isPremiumModalOpen}
@@ -301,6 +419,24 @@ export default function App() {
         language={language}
         onSelectPlan={handleSelectPlan}
       />
+
+      {/* Onboarding Modal */}
+      <OnboardingModal
+        isOpen={showOnboarding}
+        onClose={() => setShowOnboarding(false)}
+        language={language}
+      />
+
+      {/* Admin Dev Tools */}
+      <AdminDevTools
+        onNavigate={setCurrentPage}
+        onResetOnboarding={resetOnboarding}
+        onTogglePremium={togglePremium}
+        isPremium={isLoggedIn}
+      />
+
+      {/* Launch Celebration (shown when checklist 100%) */}
+      <LaunchCelebration />
 
       <Footer language={language} setCurrentPage={setCurrentPage} />
     </div>
