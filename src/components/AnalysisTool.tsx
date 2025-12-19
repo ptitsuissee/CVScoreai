@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Upload, Zap } from 'lucide-react';
 import { analyzeCVWithAI } from '../services/cvAnalysis';
 
@@ -17,6 +17,7 @@ const content = {
     analyzeButton: 'Analyser mon CV',
     disclaimer: 'Analyse gratuite, aucune carte bancaire requise',
     uploadButton: 'Ou télécharger un fichier',
+    fileError: 'Erreur lors de la lecture du fichier',
   },
   en: {
     title: 'Analyze your Resume Now',
@@ -27,6 +28,7 @@ const content = {
     analyzeButton: 'Analyze my Resume',
     disclaimer: 'Free analysis, no credit card required',
     uploadButton: 'Or upload a file',
+    fileError: 'Error reading file',
   },
 };
 
@@ -45,6 +47,7 @@ export function AnalysisTool({ language, onAnalyze }: AnalysisToolProps) {
   const [targetJob, setTargetJob] = useState('');
   const [country, setCountry] = useState('FR');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleAnalyze = async () => {
     if (!cvText.trim()) return;
@@ -72,6 +75,30 @@ export function AnalysisTool({ language, onAnalyze }: AnalysisToolProps) {
     }
   };
 
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const text = e.target?.result as string;
+        setCvText(text);
+      };
+      reader.onerror = () => {
+        alert(t.fileError);
+      };
+      
+      // Support for text files only (PDF/DOC would need additional libraries)
+      if (file.name.endsWith('.txt')) {
+        reader.readAsText(file);
+      } else {
+        alert(language === 'fr' 
+          ? 'Pour le moment, seuls les fichiers .txt sont supportés. Vous pouvez copier-coller le contenu de votre CV.' 
+          : 'Currently, only .txt files are supported. You can copy-paste your resume content.');
+        event.target.value = ''; // Reset input
+      }
+    }
+  };
+
   return (
     <section id="analyze" className="py-20 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -89,10 +116,23 @@ export function AnalysisTool({ language, onAnalyze }: AnalysisToolProps) {
               rows={12}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none transition-all"
             />
-            <button className="mt-2 text-sm text-gray-600 hover:text-blue-600 flex items-center gap-2 transition-colors">
+            <button
+              className="mt-2 text-sm text-gray-600 hover:text-blue-600 flex items-center gap-2 transition-colors"
+              onClick={() => fileInputRef.current?.click()}
+            >
               <Upload size={16} />
               {t.uploadButton}
             </button>
+            <p className="text-xs text-gray-500 mt-1">
+              {language === 'fr' ? '(Format .txt uniquement pour le moment)' : '(.txt format only for now)'}
+            </p>
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleFileUpload}
+              accept=".txt"
+              className="hidden"
+            />
           </div>
 
           {/* Job Title Input */}
