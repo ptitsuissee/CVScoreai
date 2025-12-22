@@ -3,6 +3,10 @@ import { SEOMarketingSuisse } from './components/SEOMarketingSuisse';
 import { SEOEtudiantEurope } from './components/SEOEtudiantEurope';
 import { SEODataAnalyst } from './components/SEODataAnalyst';
 import { SEOPremierEmploi } from './components/SEOPremierEmploi';
+import { SEOPillarPage } from './components/SEOPillarPage';
+import { SEOATSPage } from './components/SEOATSPage';
+import { SEOMarketingPage } from './components/SEOMarketingPage';
+import { SEOCountryPage } from './components/SEOCountryPage';
 import { GrowthLoop } from './components/GrowthLoop';
 import { PostPurchaseEmail } from './components/PostPurchaseEmail';
 import { ProductRoadmap } from './components/ProductRoadmap';
@@ -51,7 +55,7 @@ import { CVAnalysisResult } from './services/cvAnalysis';
 import { CVOptimizationResult, optimizeCVWithAI } from './services/cvOptimization';
 import { PremiumAnalysisResult, analyzeCVPremium } from './services/premiumAnalysis';
 
-type Page = 'home' | 'examples' | 'pricing' | 'pricing-email' | 'stripe-success' | 'analysis' | 'widget' | 'widget-demo' | 'freemium' | 'dashboard' | 'user-dashboard' | 'free-dashboard' | 'premium-dashboard' | 'seo-landing' | 'mobile-experience' | 'growth-loop' | 'post-purchase-email' | 'roadmap' | 'enhanced-premium' | 'seo-marketing-suisse' | 'seo-etudiant-europe' | 'seo-data-analyst' | 'seo-premier-emploi' | 'legal' | 'privacy' | 'checkout' | 'payment-success' | 'payment-cancel' | 'premium-activation' | 'premium-success' | 'launch-checklist' | 'metrics' | 'comparison' | 'user-journey' | 'email-widget';
+type Page = 'home' | 'examples' | 'pricing' | 'pricing-email' | 'stripe-success' | 'analysis' | 'widget' | 'widget-demo' | 'freemium' | 'dashboard' | 'user-dashboard' | 'free-dashboard' | 'premium-dashboard' | 'seo-landing' | 'mobile-experience' | 'growth-loop' | 'post-purchase-email' | 'roadmap' | 'enhanced-premium' | 'seo-marketing-suisse' | 'seo-etudiant-europe' | 'seo-data-analyst' | 'seo-premier-emploi' | 'seo-pillar-page' | 'seo-ats-page' | 'seo-marketing-page' | 'seo-country-suisse' | 'seo-country-france' | 'seo-country-europe' | 'legal' | 'privacy' | 'checkout' | 'payment-success' | 'payment-cancel' | 'premium-activation' | 'premium-success' | 'launch-checklist' | 'metrics' | 'comparison' | 'user-journey' | 'email-widget';
 
 export default function App() {
   const [language, setLanguage] = useState<'fr' | 'en'>('fr');
@@ -552,6 +556,87 @@ export default function App() {
               document.getElementById('analyze')?.scrollIntoView({ behavior: 'smooth' });
             }, 100);
           }}
+        />
+      )}
+
+      {currentPage === 'seo-pillar-page' && (
+        <SEOPillarPage 
+          language={language}
+          onStartAnalysis={() => {
+            setCurrentPage('home');
+            setTimeout(() => {
+              document.getElementById('analyze')?.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+          }}
+          onUpgradePremium={() => setCurrentPage('pricing')}
+        />
+      )}
+
+      {currentPage === 'seo-ats-page' && (
+        <SEOATSPage 
+          language={language}
+          onStartAnalysis={() => {
+            setCurrentPage('home');
+            setTimeout(() => {
+              document.getElementById('analyze')?.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+          }}
+          onUpgradePremium={() => setCurrentPage('pricing')}
+        />
+      )}
+
+      {currentPage === 'seo-marketing-page' && (
+        <SEOMarketingPage 
+          language={language}
+          onStartAnalysis={() => {
+            setCurrentPage('home');
+            setTimeout(() => {
+              document.getElementById('analyze')?.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+          }}
+          onUpgradePremium={() => setCurrentPage('pricing')}
+        />
+      )}
+
+      {currentPage === 'seo-country-suisse' && (
+        <SEOCountryPage 
+          language={language}
+          country="suisse"
+          onStartAnalysis={() => {
+            setCurrentPage('home');
+            setTimeout(() => {
+              document.getElementById('analyze')?.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+          }}
+          onUpgradePremium={() => setCurrentPage('pricing')}
+        />
+      )}
+
+      {currentPage === 'seo-country-france' && (
+        <SEOCountryPage 
+          language={language}
+          country="france"
+          onStartAnalysis={() => {
+            setCurrentPage('home');
+            setTimeout(() => {
+              document.getElementById('analyze')?.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+          }}
+          onUpgradePremium={() => setCurrentPage('pricing')}
+        />
+      )}
+
+      {currentPage === 'seo-country-europe' && (
+        <SEOCountryPage 
+          language={language}
+          country="europe"
+          onStartAnalysis={() => {
+            setCurrentPage('home');
+            setTimeout(() => {
+              document.getElementById('analyze')?.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+          }}
+          onUpgradePremium={() => setCurrentPage('pricing')}
         />
       )}
 
