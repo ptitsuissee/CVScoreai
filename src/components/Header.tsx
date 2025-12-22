@@ -1,4 +1,4 @@
-import { Menu, User, X } from 'lucide-react';
+import { Menu, User, X, Crown, LayoutDashboard } from 'lucide-react';
 import { useState } from 'react';
 import { MobileMenu } from './MobileMenu';
 
@@ -83,19 +83,21 @@ export function Header({ language, setLanguage, currentPage, setCurrentPage, isL
             >
               {t.pricing}
             </button>
+          </nav>
+
+          {/* CTA + Dashboard + Language Switcher */}
+          <div className="hidden md:flex items-center gap-4">
+            {/* Dashboard Button - Super visible pour Premium */}
             {isLoggedIn && (
               <button 
                 onClick={() => handleNavClick('dashboard')}
-                className="text-gray-600 hover:text-gray-900 transition-colors flex items-center gap-2"
+                className="px-5 py-2.5 bg-gradient-to-r from-yellow-500 to-orange-500 text-white rounded-lg hover:shadow-xl transition-all flex items-center gap-2 shadow-lg shadow-orange-500/30"
               >
-                <User size={18} />
-                {t.dashboard}
+                <Crown size={20} />
+                <span className="font-medium">{t.dashboard}</span>
               </button>
             )}
-          </nav>
 
-          {/* CTA + Language Switcher */}
-          <div className="hidden md:flex items-center gap-4">
             {/* Language Switcher */}
             <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
               <button
@@ -141,6 +143,17 @@ export function Header({ language, setLanguage, currentPage, setCurrentPage, isL
         {mobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-gray-200">
             <nav className="flex flex-col gap-4">
+              {/* Dashboard en premier pour utilisateurs Premium - super visible */}
+              {isLoggedIn && (
+                <button 
+                  onClick={() => handleNavClick('dashboard')}
+                  className="px-5 py-3 bg-gradient-to-r from-yellow-500 to-orange-500 text-white rounded-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 shadow-lg"
+                >
+                  <Crown size={20} />
+                  <span className="font-medium">{t.dashboard}</span>
+                </button>
+              )}
+              
               <button 
                 onClick={() => handleNavClick('home')}
                 className="text-gray-600 hover:text-gray-900 text-left"
@@ -165,15 +178,6 @@ export function Header({ language, setLanguage, currentPage, setCurrentPage, isL
               >
                 {t.pricing}
               </button>
-              {isLoggedIn && (
-                <button 
-                  onClick={() => handleNavClick('dashboard')}
-                  className="text-gray-600 hover:text-gray-900 text-left flex items-center gap-2"
-                >
-                  <User size={18} />
-                  {t.dashboard}
-                </button>
-              )}
               <div className="flex items-center gap-2 pt-2">
                 <button
                   onClick={() => setLanguage('fr')}

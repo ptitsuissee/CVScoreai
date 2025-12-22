@@ -2,6 +2,7 @@ import { ArrowRight, Sparkles, CheckCircle, Zap, Shield } from 'lucide-react';
 
 interface HeroProps {
   language: 'fr' | 'en';
+  onNavigate?: (page: string) => void;
 }
 
 const content = {
@@ -47,7 +48,7 @@ const content = {
   },
 };
 
-export function Hero({ language }: HeroProps) {
+export function Hero({ language, onNavigate }: HeroProps) {
   const t = content[language];
 
   return (
@@ -77,12 +78,12 @@ export function Hero({ language }: HeroProps) {
                 {t.primaryCTA}
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </a>
-              <a
-                href="#results"
+              <button
+                onClick={() => onNavigate && onNavigate('examples')}
                 className="px-8 py-4 bg-white text-gray-900 rounded-lg hover:bg-gray-50 transition-colors border border-gray-200 flex items-center justify-center gap-2"
               >
                 {t.secondaryCTA}
-              </a>
+              </button>
             </div>
 
             <p className="text-sm text-gray-500 mt-4 text-center lg:text-left">

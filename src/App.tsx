@@ -1,3 +1,12 @@
+import { EnhancedPremiumAnalysis } from './components/EnhancedPremiumAnalysis';
+import { SEOMarketingSuisse } from './components/SEOMarketingSuisse';
+import { SEOEtudiantEurope } from './components/SEOEtudiantEurope';
+import { SEODataAnalyst } from './components/SEODataAnalyst';
+import { SEOPremierEmploi } from './components/SEOPremierEmploi';
+import { GrowthLoop } from './components/GrowthLoop';
+import { PostPurchaseEmail } from './components/PostPurchaseEmail';
+import { ProductRoadmap } from './components/ProductRoadmap';
+import { MicroDemoSection } from './components/MicroDemoSection';
 import { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
@@ -36,14 +45,13 @@ import { LaunchCelebration } from './components/LaunchCelebration';
 import { MetricsDashboard } from './components/MetricsDashboard';
 import { FreemiumComparisonVisual } from './components/FreemiumComparisonVisual';
 import { UserJourneyVisualization } from './components/UserJourneyVisualization';
-import { MicroDemoSection } from './components/MicroDemoSection';
 import { PremiumTransitionSection } from './components/PremiumTransitionSection';
 import { MobileCTA } from './components/MobileCTA';
 import { CVAnalysisResult } from './services/cvAnalysis';
 import { CVOptimizationResult, optimizeCVWithAI } from './services/cvOptimization';
 import { PremiumAnalysisResult, analyzeCVPremium } from './services/premiumAnalysis';
 
-type Page = 'home' | 'examples' | 'pricing' | 'analysis' | 'widget' | 'widget-demo' | 'freemium' | 'dashboard' | 'free-dashboard' | 'premium-dashboard' | 'legal' | 'privacy' | 'checkout' | 'payment-success' | 'payment-cancel' | 'premium-activation' | 'premium-success' | 'launch-checklist' | 'metrics' | 'comparison' | 'user-journey';
+type Page = 'home' | 'examples' | 'pricing' | 'pricing-email' | 'stripe-success' | 'analysis' | 'widget' | 'widget-demo' | 'freemium' | 'dashboard' | 'user-dashboard' | 'free-dashboard' | 'premium-dashboard' | 'seo-landing' | 'mobile-experience' | 'growth-loop' | 'post-purchase-email' | 'roadmap' | 'enhanced-premium' | 'seo-marketing-suisse' | 'seo-etudiant-europe' | 'seo-data-analyst' | 'seo-premier-emploi' | 'legal' | 'privacy' | 'checkout' | 'payment-success' | 'payment-cancel' | 'premium-activation' | 'premium-success' | 'launch-checklist' | 'metrics' | 'comparison' | 'user-journey' | 'email-widget';
 
 export default function App() {
   const [language, setLanguage] = useState<'fr' | 'en'>('fr');
@@ -213,7 +221,7 @@ export default function App() {
       
       {currentPage === 'home' && (
         <>
-          <Hero language={language} />
+          <Hero language={language} onNavigate={setCurrentPage} />
           <HowItWorks language={language} />
           <AnalysisTool language={language} onAnalyze={handleAnalyze} />
           {currentAnalysis && (
@@ -268,6 +276,24 @@ export default function App() {
         />
       )}
 
+      {currentPage === 'pricing-email' && (
+        <PricingPageEmail 
+          language={language} 
+          onNavigate={setCurrentPage}
+        />
+      )}
+
+      {currentPage === 'stripe-success' && (
+        <StripeSuccessPage 
+          language={language}
+          onReturnToAnalysis={() => {
+            activatePremium();
+            setCurrentPage('email-widget');
+          }}
+          onViewPremiumFeatures={() => setCurrentPage('comparison')}
+        />
+      )}
+
       {currentPage === 'analysis' && (
         <AnalysisPage 
           language={language}
@@ -306,6 +332,15 @@ export default function App() {
               document.getElementById('analyze')?.scrollIntoView({ behavior: 'smooth' });
             }, 100);
           }}
+        />
+      )}
+
+      {currentPage === 'user-dashboard' && (
+        <UserDashboardPage 
+          language={language}
+          isPremium={isLoggedIn}
+          onNavigate={setCurrentPage}
+          analysisHistory={analysisHistory}
         />
       )}
 
@@ -410,6 +445,114 @@ export default function App() {
 
       {currentPage === 'user-journey' && (
         <UserJourneyVisualization language={language} />
+      )}
+
+      {currentPage === 'email-widget' && (
+        <EmailPremiumWidget 
+          language={language}
+          onNavigateToPricing={() => setCurrentPage('pricing')}
+        />
+      )}
+
+      {currentPage === 'seo-landing' && (
+        <SEOLandingPage 
+          language={language}
+          onNavigate={setCurrentPage}
+        />
+      )}
+
+      {currentPage === 'mobile-experience' && (
+        <MobileFirstExperience 
+          language={language}
+          onNavigate={setCurrentPage}
+        />
+      )}
+
+      {currentPage === 'growth-loop' && currentAnalysis && (
+        <GrowthLoop 
+          language={language}
+          userScore={currentAnalysis.overall_score}
+          isPremium={isLoggedIn}
+          onAnalyzeAgain={() => {
+            setCurrentPage('home');
+            setTimeout(() => {
+              document.getElementById('analyze')?.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+          }}
+          onCompare={() => setCurrentPage('comparison')}
+        />
+      )}
+
+      {currentPage === 'post-purchase-email' && (
+        <PostPurchaseEmail 
+          language={language}
+          userEmail="user@example.com"
+          purchaseDate={new Date().toLocaleDateString()}
+        />
+      )}
+
+      {currentPage === 'roadmap' && (
+        <ProductRoadmap 
+          language={language}
+          layout="vertical"
+        />
+      )}
+
+      {currentPage === 'enhanced-premium' && currentAnalysis && (
+        <EnhancedPremiumAnalysis 
+          language={language}
+          isPremium={isLoggedIn}
+          cvScore={currentAnalysis.overall_score}
+          onUpgrade={() => setCurrentPage('pricing')}
+        />
+      )}
+
+      {currentPage === 'seo-marketing-suisse' && (
+        <SEOMarketingSuisse 
+          language={language}
+          onStartAnalysis={() => {
+            setCurrentPage('home');
+            setTimeout(() => {
+              document.getElementById('analyze')?.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+          }}
+        />
+      )}
+
+      {currentPage === 'seo-etudiant-europe' && (
+        <SEOEtudiantEurope 
+          language={language}
+          onStartAnalysis={() => {
+            setCurrentPage('home');
+            setTimeout(() => {
+              document.getElementById('analyze')?.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+          }}
+        />
+      )}
+
+      {currentPage === 'seo-data-analyst' && (
+        <SEODataAnalyst 
+          language={language}
+          onStartAnalysis={() => {
+            setCurrentPage('home');
+            setTimeout(() => {
+              document.getElementById('analyze')?.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+          }}
+        />
+      )}
+
+      {currentPage === 'seo-premier-emploi' && (
+        <SEOPremierEmploi 
+          language={language}
+          onStartAnalysis={() => {
+            setCurrentPage('home');
+            setTimeout(() => {
+              document.getElementById('analyze')?.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+          }}
+        />
       )}
 
       {/* Premium Modal */}
