@@ -1,16 +1,9 @@
-import { EnhancedPremiumAnalysis } from './components/EnhancedPremiumAnalysis';
-import { SEOMarketingSuisse } from './components/SEOMarketingSuisse';
-import { SEOEtudiantEurope } from './components/SEOEtudiantEurope';
-import { SEODataAnalyst } from './components/SEODataAnalyst';
-import { SEOPremierEmploi } from './components/SEOPremierEmploi';
-import { SEOPillarPage } from './components/SEOPillarPage';
-import { SEOATSPage } from './components/SEOATSPage';
-import { SEOMarketingPage } from './components/SEOMarketingPage';
-import { SEOCountryPage } from './components/SEOCountryPage';
+import { CVBuilder } from './components/CVBuilder';
+import { CVCreatorSection } from './components/CVCreatorSection';
+import { UserDashboard } from './components/UserDashboard';
+import { AccountPromptModal } from './components/AccountPromptModal';
+import { AuthModal } from './components/AuthModal';
 import { GrowthLoop } from './components/GrowthLoop';
-import { PostPurchaseEmail } from './components/PostPurchaseEmail';
-import { ProductRoadmap } from './components/ProductRoadmap';
-import { MicroDemoSection } from './components/MicroDemoSection';
 import { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
@@ -55,12 +48,16 @@ import { CVAnalysisResult } from './services/cvAnalysis';
 import { CVOptimizationResult, optimizeCVWithAI } from './services/cvOptimization';
 import { PremiumAnalysisResult, analyzeCVPremium } from './services/premiumAnalysis';
 
-type Page = 'home' | 'examples' | 'pricing' | 'pricing-email' | 'stripe-success' | 'analysis' | 'widget' | 'widget-demo' | 'freemium' | 'dashboard' | 'user-dashboard' | 'free-dashboard' | 'premium-dashboard' | 'seo-landing' | 'mobile-experience' | 'growth-loop' | 'post-purchase-email' | 'roadmap' | 'enhanced-premium' | 'seo-marketing-suisse' | 'seo-etudiant-europe' | 'seo-data-analyst' | 'seo-premier-emploi' | 'seo-pillar-page' | 'seo-ats-page' | 'seo-marketing-page' | 'seo-country-suisse' | 'seo-country-france' | 'seo-country-europe' | 'legal' | 'privacy' | 'checkout' | 'payment-success' | 'payment-cancel' | 'premium-activation' | 'premium-success' | 'launch-checklist' | 'metrics' | 'comparison' | 'user-journey' | 'email-widget';
+type Page = 'home' | 'examples' | 'pricing' | 'pricing-email' | 'stripe-success' | 'analysis' | 'widget' | 'widget-demo' | 'freemium' | 'dashboard' | 'user-dashboard' | 'free-dashboard' | 'premium-dashboard' | 'seo-landing' | 'mobile-experience' | 'growth-loop' | 'post-purchase-email' | 'roadmap' | 'enhanced-premium' | 'seo-marketing-suisse' | 'seo-etudiant-europe' | 'seo-data-analyst' | 'seo-premier-emploi' | 'seo-pillar-page' | 'seo-ats-page' | 'seo-marketing-page' | 'seo-country-suisse' | 'seo-country-france' | 'seo-country-europe' | 'creer-cv' | 'legal' | 'privacy' | 'checkout' | 'payment-success' | 'payment-cancel' | 'premium-activation' | 'premium-success' | 'launch-checklist' | 'metrics' | 'comparison' | 'user-journey' | 'email-widget';
 
 export default function App() {
   const [language, setLanguage] = useState<'fr' | 'en'>('fr');
   const [currentPage, setCurrentPage] = useState<Page>('home');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
+  const [showAccountPrompt, setShowAccountPrompt] = useState(false);
+  const [accountPromptVariant, setAccountPromptVariant] = useState<'save' | 'history' | 'payment'>('save');
+  const [showAuthModal, setShowAuthModal] = useState(false);
   const [analysisHistory, setAnalysisHistory] = useState<any[]>([]);
   const [currentAnalysis, setCurrentAnalysis] = useState<CVAnalysisResult | null>(null);
   const [currentOptimization, setCurrentOptimization] = useState<CVOptimizationResult | null>(null);
@@ -72,10 +69,17 @@ export default function App() {
   const [selectedPlanType, setSelectedPlanType] = useState<'monthly' | 'oneTime' | null>(null);
   const [showOnboarding, setShowOnboarding] = useState(false);
 
-  // Check Premium status from localStorage
+  // Check login status from localStorage
   useEffect(() => {
+    const storedEmail = localStorage.getItem('userEmail');
     const isPremiumStored = localStorage.getItem('isPremium') === 'true';
-    setIsLoggedIn(isPremiumStored);
+    if (storedEmail) {
+      setIsLoggedIn(true);
+      setUserEmail(storedEmail);
+    }
+    if (isPremiumStored) {
+      setIsLoggedIn(true);
+    }
   }, []);
 
   // Show onboarding only on first visit
@@ -637,6 +641,12 @@ export default function App() {
             }, 100);
           }}
           onUpgradePremium={() => setCurrentPage('pricing')}
+        />
+      )}
+
+      {currentPage === 'creer-cv' && (
+        <CVCreatorSection 
+          language={language}
         />
       )}
 

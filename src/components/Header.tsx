@@ -60,6 +60,12 @@ export function Header({ language, setLanguage, currentPage, setCurrentPage, isL
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
             <button 
+              onClick={() => handleNavClick('creer-cv')}
+              className="text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              {t.createCV}
+            </button>
+            <button 
               onClick={() => handleNavClick('home')}
               className="text-gray-600 hover:text-gray-900 transition-colors"
             >
@@ -154,6 +160,12 @@ export function Header({ language, setLanguage, currentPage, setCurrentPage, isL
                 </button>
               )}
               
+              <button 
+                onClick={() => handleNavClick('creer-cv')}
+                className="text-gray-600 hover:text-gray-900 text-left"
+              >
+                {t.createCV}
+              </button>
               <button 
                 onClick={() => handleNavClick('home')}
                 className="text-gray-600 hover:text-gray-900 text-left"
