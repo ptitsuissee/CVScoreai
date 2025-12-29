@@ -3,6 +3,10 @@ import { CVCreatorSection } from './components/CVCreatorSection';
 import { UserDashboard } from './components/UserDashboard';
 import { AccountPromptModal } from './components/AccountPromptModal';
 import { AuthModal } from './components/AuthModal';
+import { LoginModal } from './components/LoginModal';
+import { SignupPromptModal } from './components/SignupPromptModal';
+import { WhoIsItForSection } from './components/WhoIsItForSection';
+import { FreeVsPremiumSection } from './components/FreeVsPremiumSection';
 import { GrowthLoop } from './components/GrowthLoop';
 import { useState, useEffect } from 'react';
 import { Header } from './components/Header';
@@ -47,8 +51,12 @@ import { MobileCTA } from './components/MobileCTA';
 import { CVAnalysisResult } from './services/cvAnalysis';
 import { CVOptimizationResult, optimizeCVWithAI } from './services/cvOptimization';
 import { PremiumAnalysisResult, analyzeCVPremium } from './services/premiumAnalysis';
+import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
+import { LegalNoticePage } from './components/LegalNoticePage';
+import { EmailPreviewPage } from './components/EmailPreviewPage';
+import { UserAccountDashboard } from './components/UserAccountDashboard';
 
-type Page = 'home' | 'examples' | 'pricing' | 'pricing-email' | 'stripe-success' | 'analysis' | 'widget' | 'widget-demo' | 'freemium' | 'dashboard' | 'user-dashboard' | 'free-dashboard' | 'premium-dashboard' | 'seo-landing' | 'mobile-experience' | 'growth-loop' | 'post-purchase-email' | 'roadmap' | 'enhanced-premium' | 'seo-marketing-suisse' | 'seo-etudiant-europe' | 'seo-data-analyst' | 'seo-premier-emploi' | 'seo-pillar-page' | 'seo-ats-page' | 'seo-marketing-page' | 'seo-country-suisse' | 'seo-country-france' | 'seo-country-europe' | 'creer-cv' | 'legal' | 'privacy' | 'checkout' | 'payment-success' | 'payment-cancel' | 'premium-activation' | 'premium-success' | 'launch-checklist' | 'metrics' | 'comparison' | 'user-journey' | 'email-widget';
+type Page = 'home' | 'examples' | 'pricing' | 'pricing-email' | 'stripe-success' | 'analysis' | 'widget' | 'widget-demo' | 'freemium' | 'dashboard' | 'user-dashboard' | 'free-dashboard' | 'premium-dashboard' | 'seo-landing' | 'mobile-experience' | 'growth-loop' | 'post-purchase-email' | 'roadmap' | 'enhanced-premium' | 'seo-marketing-suisse' | 'seo-etudiant-europe' | 'seo-data-analyst' | 'seo-premier-emploi' | 'seo-pillar-page' | 'seo-ats-page' | 'seo-marketing-page' | 'seo-country-suisse' | 'seo-country-france' | 'seo-country-europe' | 'creer-cv' | 'legal' | 'privacy' | 'checkout' | 'payment-success' | 'payment-cancel' | 'premium-activation' | 'premium-success' | 'launch-checklist' | 'metrics' | 'comparison' | 'user-journey' | 'email-widget' | 'privacy-policy' | 'legal-notice' | 'email-preview' | 'account-dashboard';
 
 export default function App() {
   const [language, setLanguage] = useState<'fr' | 'en'>('fr');
@@ -379,11 +387,39 @@ export default function App() {
       )}
 
       {currentPage === 'legal' && (
-        <LegalPage language={language} />
+        <LegalNoticePage language={language} />
       )}
 
       {currentPage === 'privacy' && (
-        <PrivacyPage language={language} />
+        <PrivacyPolicyPage language={language} />
+      )}
+
+      {currentPage === 'privacy-policy' && (
+        <PrivacyPolicyPage language={language} />
+      )}
+
+      {currentPage === 'legal-notice' && (
+        <LegalNoticePage language={language} />
+      )}
+
+      {currentPage === 'email-preview' && (
+        <EmailPreviewPage language={language} />
+      )}
+
+      {currentPage === 'account-dashboard' && (
+        <UserAccountDashboard 
+          language={language}
+          userEmail={userEmail || 'user@example.com'}
+          isPremium={isLoggedIn}
+          onNavigate={setCurrentPage}
+          onLogout={() => {
+            setIsLoggedIn(false);
+            setUserEmail('');
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('isPremium');
+            setCurrentPage('home');
+          }}
+        />
       )}
 
       {currentPage === 'checkout' && selectedPlanType && (

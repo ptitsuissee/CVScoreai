@@ -7,11 +7,11 @@ interface HeroProps {
 
 const content = {
   fr: {
-    title: 'Analyse ton CV avec l\'IA et augmente tes chances d\'entretien',
-    subtitle: 'Score instantané, conseils personnalisés et optimisation ATS pour le marché européen.',
+    title: 'Analyse de CV par IA pour améliorer ton CV en 60 secondes',
+    subtitle: 'CVScore.ai propose une analyse de CV par intelligence artificielle pour t\'aider à améliorer ton CV, optimiser sa structure et augmenter tes chances face aux recruteurs et aux systèmes ATS.',
     primaryCTA: 'Analyser mon CV gratuitement',
-    secondaryCTA: "Voir un exemple d'analyse",
-    noCreditCard: 'Sans inscription · Résultat immédiat',
+    secondaryCTA: 'Créer mon CV en ligne',
+    trustText: 'Sans compte · Résultats instantanés · Paiement sécurisé pour l\'export',
     trustBadges: [
       { icon: Zap, text: 'Analyse en moins de 60 secondes' },
       { icon: Shield, text: 'Adapté aux recruteurs européens' },
@@ -27,11 +27,11 @@ const content = {
     },
   },
   en: {
-    title: 'Analyze your resume with AI and improve your chances of interviews',
-    subtitle: 'Instant score, personalized advice and ATS optimization for the European job market.',
-    primaryCTA: 'Analyze my resume for free',
-    secondaryCTA: 'See an example analysis',
-    noCreditCard: 'No registration · Instant results',
+    title: 'AI Resume Analysis to Improve Your Resume in 60 Seconds',
+    subtitle: 'CVScore.ai offers AI-powered resume analysis to help you improve your resume, optimize its structure, and increase your chances with recruiters and ATS systems.',
+    primaryCTA: 'Analyze my Resume for Free',
+    secondaryCTA: 'Create my Resume Online',
+    trustText: 'No account · Instant results · Secure payment for export',
     trustBadges: [
       { icon: Zap, text: 'Analysis in under 60 seconds' },
       { icon: Shield, text: 'Tailored to European recruiters' },
@@ -79,7 +79,7 @@ export function Hero({ language, onNavigate }: HeroProps) {
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </a>
               <button
-                onClick={() => onNavigate && onNavigate('examples')}
+                onClick={() => onNavigate && onNavigate('creer-cv')}
                 className="px-8 py-4 bg-white text-gray-900 rounded-lg hover:bg-gray-50 transition-colors border border-gray-200 flex items-center justify-center gap-2"
               >
                 {t.secondaryCTA}
@@ -87,7 +87,7 @@ export function Hero({ language, onNavigate }: HeroProps) {
             </div>
 
             <p className="text-sm text-gray-500 mt-4 text-center lg:text-left">
-              {t.noCreditCard}
+              {t.trustText}
             </p>
 
             {/* Trust badges */}

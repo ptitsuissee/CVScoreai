@@ -11,8 +11,8 @@ const STRIPE_PUBLISHABLE_KEY = 'pk_live_51Sf24f77bQKrFJdSfpWgumq1fr63EhrnfoOdgmN
 
 const content = {
   fr: {
-    title: 'Tarifs simples et transparents',
-    subtitle: 'Choisissez l\'offre qui vous convient',
+    title: 'Tarifs pour l\'analyse et l\'export de CV',
+    subtitle: 'Crée et analyse ton CV gratuitement. Paie uniquement si tu souhaites télécharger ton CV ou accéder aux fonctionnalités Premium.',
     currency: {
       eur: 'EUR (€)',
       chf: 'CHF',

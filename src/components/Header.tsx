@@ -12,26 +12,20 @@ interface HeaderProps {
 
 const content = {
   fr: {
+    analyze: 'Analyser',
     createCV: 'Créer un CV',
-    analyze: 'Analyser mon CV',
-    aiAnalysis: 'Analyse IA',
-    widget: 'Widget IA',
-    howItWorks: 'Comment ça marche',
-    examples: 'Exemples',
     pricing: 'Tarifs',
-    dashboard: 'Tableau de bord',
-    cta: 'Analyser mon CV gratuitement',
+    login: 'Connexion',
+    cta: 'Analyser mon CV',
+    dashboard: 'Mon espace',
   },
   en: {
+    analyze: 'Analyze',
     createCV: 'Create Resume',
-    analyze: 'Analyze Resume',
-    aiAnalysis: 'AI Analysis',
-    widget: 'AI Widget',
-    howItWorks: 'How it Works',
-    examples: 'Examples',
     pricing: 'Pricing',
-    dashboard: 'Dashboard',
-    cta: 'Analyze my resume for free',
+    login: 'Login',
+    cta: 'Analyze my Resume',
+    dashboard: 'My Dashboard',
   },
 };
 
@@ -66,29 +60,32 @@ export function Header({ language, setLanguage, currentPage, setCurrentPage, isL
               {t.createCV}
             </button>
             <button 
-              onClick={() => handleNavClick('home')}
-              className="text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              {t.analyze}
-            </button>
-            <button 
-              onClick={() => handleNavClick('analysis')}
-              className="text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              {t.aiAnalysis}
-            </button>
-            <button 
-              onClick={() => handleNavClick('examples')}
-              className="text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              {t.examples}
-            </button>
-            <button 
               onClick={() => handleNavClick('pricing')}
               className="text-gray-600 hover:text-gray-900 transition-colors"
             >
               {t.pricing}
             </button>
+            
+            {/* Connexion discrète - visible seulement si pas connecté */}
+            {!isLoggedIn && (
+              <button 
+                onClick={() => handleNavClick('login')}
+                className="text-gray-500 hover:text-gray-700 transition-colors text-sm"
+              >
+                {t.login}
+              </button>
+            )}
+            
+            {/* Dashboard si connecté */}
+            {isLoggedIn && (
+              <button 
+                onClick={() => handleNavClick('user-dashboard')}
+                className="text-gray-600 hover:text-gray-900 transition-colors flex items-center gap-2"
+              >
+                <User size={18} />
+                <span>{t.dashboard}</span>
+              </button>
+            )}
           </nav>
 
           {/* CTA + Dashboard + Language Switcher */}
@@ -165,24 +162,6 @@ export function Header({ language, setLanguage, currentPage, setCurrentPage, isL
                 className="text-gray-600 hover:text-gray-900 text-left"
               >
                 {t.createCV}
-              </button>
-              <button 
-                onClick={() => handleNavClick('home')}
-                className="text-gray-600 hover:text-gray-900 text-left"
-              >
-                {t.analyze}
-              </button>
-              <button 
-                onClick={() => handleNavClick('analysis')}
-                className="text-gray-600 hover:text-gray-900 text-left"
-              >
-                {t.aiAnalysis}
-              </button>
-              <button 
-                onClick={() => handleNavClick('examples')}
-                className="text-gray-600 hover:text-gray-900 text-left"
-              >
-                {t.examples}
               </button>
               <button 
                 onClick={() => handleNavClick('pricing')}
