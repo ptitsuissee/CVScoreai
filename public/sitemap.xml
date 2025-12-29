@@ -1,37 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <!-- Homepage -->
-  <url>
-    <loc>https://www.cvscore-ai.com/</loc>
-    <priority>1.0</priority>
-  </url>
+  <!-- Home -->
+  <url><loc>https://www.cvscore-ai.com/</loc></url>
 
-  <!-- Core SEO pages -->
-  <url>
-    <loc>https://www.cvscore-ai.com/analyse-cv</loc>
-    <priority>0.9</priority>
-  </url>
+  <!-- Core pages -->
+  <url><loc>https://www.cvscore-ai.com/analyse-cv</loc></url>
+  <url><loc>https://www.cvscore-ai.com/analyse-cv-ats</loc></url>
+  <url><loc>https://www.cvscore-ai.com/analyse-cv-marketing</loc></url>
 
-  <url>
-    <loc>https://www.cvscore-ai.com/analyse-cv-ats</loc>
-    <priority>0.85</priority>
-  </url>
+  <!-- Product pages -->
+  <url><loc>https://www.cvscore-ai.com/pricing</loc></url>
+  <url><loc>https://www.cvscore-ai.com/creer-cv</loc></url>
 
-  <url>
-    <loc>https://www.cvscore-ai.com/analyse-cv-marketing</loc>
-    <priority>0.85</priority>
-  </url>
-
-  <!-- Legal / trust -->
-  <url>
-    <loc>https://www.cvscore-ai.com/confidentialite</loc>
-    <priority>0.4</priority>
-  </url>
-
-  <url>
-    <loc>https://www.cvscore-ai.com/mentions-legales</loc>
-    <priority>0.4</priority>
-  </url>
+  <!-- Legal -->
+  <url><loc>https://www.cvscore-ai.com/confidentialite</loc></url>
+  <url><loc>https://www.cvscore-ai.com/mentions-legales</loc></url>
 
 </urlset>
