@@ -1,6 +1,6 @@
 import { CVBuilder } from './components/CVBuilder';
 import { CVCreatorSection } from './components/CVCreatorSection';
-import { UserDashboard } from './components/UserDashboard';
+import { UserDashboardPage } from './components/UserDashboardPage';
 import { AccountPromptModal } from './components/AccountPromptModal';
 import { AuthModal } from './components/AuthModal';
 import { LoginModal } from './components/LoginModal';
@@ -76,6 +76,8 @@ export default function App() {
   const [isPremiumModalOpen, setIsPremiumModalOpen] = useState(false);
   const [selectedPlanType, setSelectedPlanType] = useState<'monthly' | 'oneTime' | null>(null);
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showSignupModal, setShowSignupModal] = useState(false);
 
   // Check login status from localStorage
   useEffect(() => {
@@ -225,6 +227,20 @@ export default function App() {
     setSelectedPlanType(null);
   };
 
+  const handleLoginSuccess = (email: string) => {
+    setIsLoggedIn(true);
+    setUserEmail(email);
+    localStorage.setItem('userEmail', email);
+    setShowLoginModal(false);
+  };
+
+  const handleSignupSuccess = (email: string) => {
+    setIsLoggedIn(true);
+    setUserEmail(email);
+    localStorage.setItem('userEmail', email);
+    setShowSignupModal(false);
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <Header 
@@ -233,6 +249,8 @@ export default function App() {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         isLoggedIn={isLoggedIn}
+        onOpenLoginModal={() => setShowLoginModal(true)}
+        userEmail={userEmail}
       />
       
       {currentPage === 'home' && (
@@ -692,6 +710,31 @@ export default function App() {
         onClose={() => setIsPremiumModalOpen(false)}
         language={language}
         onSelectPlan={handleSelectPlan}
+      />
+
+      {/* Login Modal */}
+      <LoginModal
+        isOpen={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+        language={language}
+        onSuccess={handleLoginSuccess}
+        onOpenSignup={() => {
+          setShowLoginModal(false);
+          setShowSignupModal(true);
+        }}
+      />
+
+      {/* Signup Modal */}
+      <SignupPromptModal
+        isOpen={showSignupModal}
+        onClose={() => setShowSignupModal(false)}
+        language={language}
+        variant="save"
+        onSuccess={handleSignupSuccess}
+        onOpenLogin={() => {
+          setShowSignupModal(false);
+          setShowLoginModal(true);
+        }}
       />
 
       {/* Onboarding Modal */}

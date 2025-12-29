@@ -5,8 +5,9 @@ interface SignupPromptModalProps {
   isOpen: boolean;
   onClose: () => void;
   language: 'fr' | 'en';
-  onCreateAccount: () => void;
-  onLoginClick?: () => void;
+  variant?: 'save' | 'history' | 'payment';
+  onSuccess?: (email: string) => void;
+  onOpenLogin?: () => void;
 }
 
 const content = {
@@ -52,7 +53,7 @@ const content = {
   },
 };
 
-export function SignupPromptModal({ isOpen, onClose, language, onCreateAccount, onLoginClick }: SignupPromptModalProps) {
+export function SignupPromptModal({ isOpen, onClose, language, variant, onSuccess, onOpenLogin }: SignupPromptModalProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -90,7 +91,7 @@ export function SignupPromptModal({ isOpen, onClose, language, onCreateAccount, 
     await new Promise(resolve => setTimeout(resolve, 1500));
 
     setIsSubmitting(false);
-    onCreateAccount();
+    if (onSuccess) onSuccess(email);
     handleClose();
   };
 
@@ -106,7 +107,7 @@ export function SignupPromptModal({ isOpen, onClose, language, onCreateAccount, 
 
   const handleLoginClick = () => {
     handleClose();
-    if (onLoginClick) onLoginClick();
+    if (onOpenLogin) onOpenLogin();
   };
 
   return (
@@ -164,7 +165,7 @@ export function SignupPromptModal({ isOpen, onClose, language, onCreateAccount, 
               </div>
 
               {/* Already have account */}
-              {onLoginClick && (
+              {onOpenLogin && (
                 <div className="text-center mt-6">
                   <p className="text-sm text-gray-600">
                     {t.alreadyHaveAccount}{' '}
@@ -288,7 +289,7 @@ export function SignupPromptModal({ isOpen, onClose, language, onCreateAccount, 
               </div>
 
               {/* Already have account */}
-              {onLoginClick && (
+              {onOpenLogin && (
                 <div className="text-center">
                   <p className="text-sm text-gray-600">
                     {t.alreadyHaveAccount}{' '}

@@ -6,7 +6,7 @@ interface LoginModalProps {
   onClose: () => void;
   language: 'fr' | 'en';
   onSuccess: (email: string) => void;
-  onSignupClick: () => void;
+  onOpenSignup?: () => void;
 }
 
 const content = {
@@ -40,7 +40,7 @@ const content = {
   },
 };
 
-export function LoginModal({ isOpen, onClose, language, onSuccess, onSignupClick }: LoginModalProps) {
+export function LoginModal({ isOpen, onClose, language, onSuccess, onOpenSignup }: LoginModalProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -83,7 +83,7 @@ export function LoginModal({ isOpen, onClose, language, onSuccess, onSignupClick
 
   const handleSignupClick = () => {
     handleClose();
-    onSignupClick();
+    if (onOpenSignup) onOpenSignup();
   };
 
   return (

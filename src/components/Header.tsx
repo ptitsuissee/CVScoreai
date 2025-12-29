@@ -8,6 +8,8 @@ interface HeaderProps {
   currentPage: string;
   setCurrentPage: (page: any) => void;
   isLoggedIn: boolean;
+  onOpenLoginModal?: () => void;
+  userEmail?: string;
 }
 
 const content = {
@@ -29,7 +31,7 @@ const content = {
   },
 };
 
-export function Header({ language, setLanguage, currentPage, setCurrentPage, isLoggedIn }: HeaderProps) {
+export function Header({ language, setLanguage, currentPage, setCurrentPage, isLoggedIn, onOpenLoginModal, userEmail }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const t = content[language];
 
@@ -67,11 +69,12 @@ export function Header({ language, setLanguage, currentPage, setCurrentPage, isL
             </button>
             
             {/* Connexion discrète - visible seulement si pas connecté */}
-            {!isLoggedIn && (
+            {!isLoggedIn && onOpenLoginModal && (
               <button 
-                onClick={() => handleNavClick('login')}
-                className="text-gray-500 hover:text-gray-700 transition-colors text-sm"
+                onClick={onOpenLoginModal}
+                className="text-gray-500 hover:text-gray-700 transition-colors text-sm flex items-center gap-2"
               >
+                <User size={16} />
                 {t.login}
               </button>
             )}
@@ -146,6 +149,20 @@ export function Header({ language, setLanguage, currentPage, setCurrentPage, isL
         {mobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-gray-200">
             <nav className="flex flex-col gap-4">
+              {/* Connexion en mobile si pas connecté */}
+              {!isLoggedIn && onOpenLoginModal && (
+                <button 
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenLoginModal();
+                  }}
+                  className="px-5 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all flex items-center justify-center gap-2"
+                >
+                  <User size={20} />
+                  <span className="font-medium">{t.login}</span>
+                </button>
+              )}
+              
               {/* Dashboard en premier pour utilisateurs Premium - super visible */}
               {isLoggedIn && (
                 <button 
